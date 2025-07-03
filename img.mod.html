@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced online image modifier to crop, resize, rotate, and apply filters to your images. Enhance visuals easily and for free.">
+    <meta name="keywords" content="image modifier, crop image, resize image, rotate image, apply image filters, free image editor">
+    <meta name="author" content="Your Name">
+    <meta name="robots" content="index, follow">
+    <title>Image Modifier - Crop, Resize, Rotate & Apply Filters</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta property="og:title" content="Image Modifier - Enhance Your Images Online">
+    <meta property="og:description" content="Easily crop, resize, rotate, and apply filters to your images with our free online tool.">
+    <meta property="og:image" content="https://yourwebsite.com/og-image.jpg">
+    <meta property="og:url" content="https://yourwebsite.com/image-modifier">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: #d1e8ff;
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .modifier-tool {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .modifier-tool:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modifier-tool h2 {
+            font-size: 1.8rem;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 0 auto;
+            padding: 10px;
+            background: #f1f4ff;
+            border: 2px dashed #2a5298;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="file"]:hover {
+            border-color: #007BFF;
+        }
+
+        .controls {
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .control-group label {
+            font-size: 1.1rem;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .control-group input, .control-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 150px;
+            font-size: 1rem;
+        }
+
+        button {
+            display: block;
+            margin: 15px auto;
+            background: linear-gradient(135deg, #007BFF, #00c6ff);
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        #preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        #preview img:hover {
+            transform: scale(1.02);
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            color: #1e3c72;
+        }
+
+        #result.hidden {
+            display: none;
+        }
+
+        #downloadLink {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #007BFF;
+            color: #fff;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        #downloadLink:hover {
+            background: #0056b3;
+        }
+
+        .ad-container, .ad-sidebar {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .ad-sidebar {
+            flex: 0 0 300px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            color: #d1e8ff;
+        }
+
+        footer nav a {
+            color: #00c6ff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        footer nav a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .ad-sidebar {
+                max-width: 100%;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            .modifier-tool {
+                padding: 20px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Image Modifier</h1>
+        <p>Crop, resize, rotate, and apply filters to enhance your images</p>
+    </header>
+
+    <main>
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <section class="modifier-tool">
+            <h2>Modify Your Image</h2>
+            <input type="file" id="imageInput" accept="image/*" aria-label="Select image to modify">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="cropWidth">Crop Width (px):</label>
+                    <input type="number" id="cropWidth" min="1" placeholder="Width">
+                </div>
+                <div class="control-group">
+                    <label for="cropHeight">Crop Height (px):</label>
+                    <input type="number" id="cropHeight" min="1" placeholder="Height">
+                </div>
+                <div class="control-group">
+                    <label for="resizeWidth">Resize Width (px):</label>
+                    <input type="number" id="resizeWidth" min="1" placeholder="Width">
+                </div>
+                <div class="control-group">
+                    <label for="rotate">Rotate (°):</label>
+                    <input type="number" id="rotate" min="-360" max="360" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="filter">Filter:</label>
+                    <select id="filter">
+                        <option value="none">None</option>
+                        <option value="grayscale">Grayscale</option>
+                        <option value="sepia">Sepia</option>
+                        <option value="brightness">Brightness (+20%)</option>
+                        <option value="contrast">Contrast (+20%)</option>
+                    </select>
+                </div>
+            </div>
+            <button id="applyBtn" disabled>Apply Modifications</button>
+            <div id="preview">
+                <h3>Preview</h3>
+                <img id="originalPreview" alt="Original image preview">
+                <img id="modifiedPreview" alt="Modified image preview">
+            </div>
+            <div id="result" class="hidden">
+                <p>Original Size: <span id="originalSize"></span></p>
+                <p>Modified Size: <span id="modifiedSize"></span></p>
+                <a id="downloadLink" href="#" download="modified-image.jpg">Download Modified Image</a>
+            </div>
+        </section>
+
+        <aside class="ad-sidebar">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </aside>
+    </main>
+
+    <footer>
+        <p>© 2025 ToolBox. All rights reserved.</p>
+        <nav>
+            <a href="/privacy-policy">Privacy Policy</a> |
+            <a href="/terms-of-service">Terms of Service</a>
+        </nav>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageInput = document.getElementById('imageInput');
+            const cropWidth = document.getElementById('cropWidth');
+            const cropHeight = document.getElementById('cropHeight');
+            const resizeWidth = document.getElementById('resizeWidth');
+            const rotate = document.getElementById('rotate');
+            const filter = document.getElementById('filter');
+            const applyBtn = document.getElementById('applyBtn');
+            const originalPreview = document.getElementById('originalPreview');
+            const modifiedPreview = document.getElementById('modifiedPreview');
+            const originalSize = document.getElementById('originalSize');
+            const modifiedSize = document.getElementById('modifiedSize');
+            const downloadLink = document.getElementById('downloadLink');
+            const result = document.getElementById('result');
+
+            let originalImage = null;
+
+            imageInput.addEventListener('change', () => {
+                if (imageInput.files.length > 0) {
+                    applyBtn.disabled = false;
+                    const file = imageInput.files[0];
+                    originalImage = file;
+                    originalSize.textContent = `${(file.size / 1024).toFixed(2)} KB`;
+                    originalPreview.src = URL.createObjectURL(file);
+                } else {
+                    applyBtn.disabled = true;
+                    originalPreview.src = '';
+                }
+            });
+
+            applyBtn.addEventListener('click', async () => {
+                if (!originalImage) return;
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+
+                img.src = URL.createObjectURL(originalImage);
+                await new Promise((resolve) => (img.onload = resolve));
+
+                // Set canvas size
+                let width = img.width;
+                let height = img.height;
+
+                // Resize
+                if (resizeWidth.value) {
+                    width = parseInt(resizeWidth.value) || width;
+                    height = (width / img.width) * img.height;
+                }
+
+                // Crop
+                let cropW = parseInt(cropWidth.value) || width;
+                let cropH = parseInt(cropHeight.value) || height;
+                cropW = Math.min(cropW, width);
+                cropH = Math.min(cropH, height);
+
+                canvas.width = cropW;
+                canvas.height = cropH;
+
+                // Rotate SNIP
+                ctx.translate(cropW / 2, cropH / 2);
+                ctx.rotate((parseInt(rotate.value) || 0) * Math.PI / 180);
+
+                // Apply filter
+                const filterValue = filter.value;
+                if (filterValue !== 'none') {
+                    ctx.filter = filterValue === 'grayscale' ? 'grayscale(100%)' :
+                                 filterValue === 'sepia' ? 'sepia(100%)' :
+                                 filterValue === 'brightness' ? 'brightness(120%)' :
+                                 filterValue === 'contrast' ? 'contrast(120%)' : 'none';
+                }
+
+                ctx.drawImage(img, (width - cropW) / 2, (height - cropH) / 2, cropW, cropH, 0, 0, cropW, cropH);
+
+                // Output to JPEG
+                const modifiedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                modifiedPreview.src = modifiedDataUrl;
+
+                // Calculate modified size
+                const modifiedBlob = await fetch(modifiedDataUrl).then((res) => res.blob());
+                modifiedSize.textContent = `${(modifiedBlob.size / 1024).toFixed(2)} KB`;
+
+                // Update download link
+                downloadLink.href = modifiedDataUrl;
+                result.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
